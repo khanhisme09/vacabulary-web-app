@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Từ vựng của tôi</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div th:replace="~{fragments :: header}"></div>
+<div class="container">
+    <!-- Bạn có thể tách header này thành một fragment để tái sử dụng -->
+    <header>...</header>
+
+    <h1>Từ vựng của tôi</h1>
+    <a href="/">Trở về trang chủ</a>
+
+    <div th:if="${#lists.isEmpty(words)}" style="margin-top: 20px;">
+        <p>Bạn chưa lưu từ vựng nào. Hãy bắt đầu <a href="/">tra cứu và lưu từ</a>!</p>
+    </div>
+
+    <table th:if="${not #lists.isEmpty(words)}" class="word-table">
+        <thead>
+        <tr>
+            <th>Từ vựng</th>
+            <th>Phiên âm</th>
+            <th>Định nghĩa</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Lặp qua danh sách từ -->
+        <tr th:each="word : ${words}" th:id="'word-row-' + ${word.id}">
+            <td th:text="${word.word}">hello</td>
+            <td th:text="${word.phonetic}">/həˈloʊ/</td>
+            <td th:text="${word.definition}">A greeting...</td>
+            <td>
+                <button class="delete-btn" th:data-word-id="${word.id}">Xóa</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/js/my-words.js" defer></script>
+</body>
+</html>

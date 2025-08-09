@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div th:replace="~{fragments :: header}"></div>
+<div class="container">
+    <h1>Đăng nhập</h1>
+    <!-- Hiển thị lỗi nếu đăng nhập sai -->
+    <div th:if="${param.error}" class="error">
+        Tên đăng nhập hoặc mật khẩu không đúng.
+    </div>
+    <div th:if="${param.logout}" style="color: green;">
+        Bạn đã đăng xuất thành công.
+    </div>
+
+    <!-- Spring Security sẽ xử lý action này -->
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label for="username">Tên đăng nhập:</label>
+            <!-- Tên input phải là "username" và "password" -->
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Mật khẩu:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Đăng nhập</button>
+    </form>
+    <p>Chưa có tài khoản? <a href="/register">Đăng ký tại đây</a>.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- Thêm namespace sec -->
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Tra từ vựng</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div th:replace="~{fragments :: header}"></div>
+<div class="container">
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Tra từ vựng tiếng Anh</h1>
+        <nav>
+
+            <!-- Hiển thị nếu người dùng CHƯA đăng nhập -->
+            <div sec:authorize="!isAuthenticated()">
+                <a href="/login" class="button">Đăng nhập</a>
+                <a href="/register" class="button">Đăng ký</a>
+            </div>
+
+            <!-- Hiển thị nếu người dùng ĐÃ đăng nhập -->
+            <div sec:authorize="isAuthenticated()">
+                <span>Chào, <strong sec:authentication="name">Username</strong>!</span>
+                <!-- Form đăng xuất của Spring Security -->
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="button-logout">Đăng xuất</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <form id="search-form">
+        <label for="search-input">
+            Nhập từ cần tra cứu:
+        </label><input type="text" id="search-input" placeholder="Nhập từ cần tra..." required>
+        <button type="submit">Tra cứu</button>
+    </form>
+
+    <div id="search-results"></div>
+</div>
+
+<script src="/js/search.js" defer></script>
+</body>
+</html>

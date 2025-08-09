@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Tra từ vựng</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<!-- Định nghĩa một fragment tên là "header" -->
+<header th:fragment="header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px;">
+  <a href="/" style="text-decoration: none; color: inherit;">
+    <h1>Từ điển Anh-Việt</h1>
+  </a>
+  <nav>
+    <div sec:authorize="!isAuthenticated()">
+      <a href="/login" class="button">Đăng nhập</a>
+      <a href="/register" class="button">Đăng ký</a>
+    </div>
+    <div sec:authorize="isAuthenticated()" style="display: flex; align-items: center; gap: 15px;">
+      <span>Chào, <strong sec:authentication="name">Username</strong>!</span>
+      <a href="/my-words" class="button">Từ của tôi</a>
+      <a href="/review" class="button">Ôn tập</a>
+      <form th:action="@{/logout}" method="post" style="display: inline; margin: 0;">
+        <button type="submit" class="button-logout">Đăng xuất</button>
+      </form>
+    </div>
+  </nav>
+</header>
+
+</body>
+</html>

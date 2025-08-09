@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Ôn tập từ vựng</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/flashcard.css"> <!-- CSS riêng cho flashcard -->
+</head>
+<body>
+<div th:replace="~{fragments :: header}"></div>
+<div class="container">
+    <h1>Ôn tập Flashcard</h1>
+    <a href="/">Trở về trang chủ</a>
+
+    <div id="flashcard-container">
+        <div class="flashcard">
+            <div class="card-inner">
+                <div class="card-front">
+                    <p id="word-display">Đang tải từ...</p>
+                </div>
+                <div class="card-back">
+                    <p id="definition-display"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="flip-btn">Lật thẻ</button>
+        <button id="next-btn">Từ tiếp theo</button>
+    </div>
+    <div id="message-container"></div>
+</div>
+<script src="/js/review.js" defer></script>
+</body>
+</html>
