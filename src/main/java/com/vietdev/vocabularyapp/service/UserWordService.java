@@ -6,7 +6,6 @@ import com.vietdev.vocabularyapp.model.Word;
 import com.vietdev.vocabularyapp.repository.UserRepository;
 import com.vietdev.vocabularyapp.repository.UserWordRepository;
 import com.vietdev.vocabularyapp.repository.WordRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +16,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserWordService {
-    @Autowired private UserWordRepository userWordRepository;
-    @Autowired private UserRepository userRepository;
-    @Autowired private WordRepository wordRepository;
+    private final UserWordRepository userWordRepository;
+    private final UserRepository userRepository;
+    private final WordRepository wordRepository;
+
+    public UserWordService(UserWordRepository userWordRepository, UserRepository userRepository, WordRepository wordRepository) {
+        this.userWordRepository = userWordRepository;
+        this.userRepository = userRepository;
+        this.wordRepository = wordRepository;
+    }
 
     public void saveWordForUser(String username, Long wordId) {
         User user = userRepository.findByUsername(username)

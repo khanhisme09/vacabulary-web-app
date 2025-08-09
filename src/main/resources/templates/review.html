@@ -25,10 +25,13 @@
         </div>
     </div>
 
-    <div class="controls">
-        <button id="flip-btn">Lật thẻ</button>
-        <button id="next-btn">Từ tiếp theo</button>
+    <div id="controls" class="controls" style="display: none;">
+        <p>Bạn nhớ từ này ở mức độ nào?</p>
+        <button class="rating-btn" data-quality="0">Khó</button>
+        <button class="rating-btn" data-quality="1">Vừa</button>
+        <button class="rating-btn" data-quality="2">Dễ</button>
     </div>
+
     <div id="message-container"></div>
 </div>
 <script src="/js/review.js" defer></script>

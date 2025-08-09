@@ -3,6 +3,7 @@ package com.vietdev.vocabularyapp.model; // Thay đổi package cho đúng
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.time.LocalDate; // Sử dụng LocalDate là đủ cho ngày ôn tập
 import java.time.LocalDateTime;
 
 @Getter
@@ -15,7 +16,7 @@ public class UserWord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY) // LAZY: chỉ load khi cần
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -23,10 +24,27 @@ public class UserWord {
     @JoinColumn(name = "word_id", nullable = false)
     private Word word;
 
-    private LocalDateTime addedAt; // Thời gian thêm từ
+    private LocalDateTime addedAt;
 
-    @PrePersist // Hàm này sẽ tự chạy trước khi lưu vào DB
+    // --- CÁC TRƯỜNG MỚI CHO SRS ---
+
+    /** Ngày dự kiến ôn tập tiếp theo. */
+    @Column(nullable = false)
+    private LocalDate nextReviewDate;
+
+    /** Khoảng thời gian giữa các lần ôn (tính bằng ngày). */
+    private int reviewInterval = 0;
+
+    /** Hệ số dễ dàng (Easiness Factor), bắt đầu từ 2.5. */
+    private double easinessFactor = 2.5;
+
+    /** Số lần ôn tập đúng liên tiếp. */
+    private int repetitions = 0;
+
+    @PrePersist
     protected void onCreate() {
         addedAt = LocalDateTime.now();
+        // Khi một từ mới được thêm, lịch ôn tập là ngay lập tức
+        nextReviewDate = LocalDate.now();
     }
 }

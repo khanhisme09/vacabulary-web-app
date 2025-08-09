@@ -18,6 +18,7 @@
     </div>
     <div sec:authorize="isAuthenticated()" style="display: flex; align-items: center; gap: 15px;">
       <span>Chào, <strong sec:authentication="name">Username</strong>!</span>
+      <a href="/dashboard" class="button">Tiến độ</a>
       <a href="/my-words" class="button">Từ của tôi</a>
       <a href="/review" class="button">Ôn tập</a>
       <form th:action="@{/logout}" method="post" style="display: inline; margin: 0;">

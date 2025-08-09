@@ -13,8 +13,11 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserWordService userWordService;
+    private final UserWordService userWordService;
+
+    public UserController(UserWordService userWordService) {
+        this.userWordService = userWordService;
+    }
 
     @GetMapping("/my-words")
     public String myWordsPage(Model model, Principal principal) {
@@ -34,5 +37,11 @@ public class UserController {
     @GetMapping("/review")
     public String reviewPage() {
         return "review"; // Trả về file review.html
+    }
+
+    // Trong class UserController
+    @GetMapping("/dashboard")
+    public String dashboardPage() {
+        return "dashboard";
     }
 }

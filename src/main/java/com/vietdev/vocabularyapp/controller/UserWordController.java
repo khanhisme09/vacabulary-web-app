@@ -12,7 +12,11 @@ import java.security.Principal;
 @RequestMapping("/api/user/words")
 public class UserWordController {
 
-    @Autowired private UserWordService userWordService;
+    private final UserWordService userWordService;
+
+    public UserWordController(UserWordService userWordService) {
+        this.userWordService = userWordService;
+    }
 
     @PostMapping("/{wordId}")
     public ResponseEntity<?> saveWord(@PathVariable Long wordId, Principal principal) {
