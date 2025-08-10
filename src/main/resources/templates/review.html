@@ -1,39 +1,50 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Ôn tập từ vựng</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/flashcard.css"> <!-- CSS riêng cho flashcard -->
+    <head th:replace="~{fragments :: head('Ôn tập Flashcard')}"></head>
+    <!-- CSS riêng cho hiệu ứng lật thẻ -->
+    <link rel="stylesheet" href="/css/flashcard.css">
 </head>
+
 <body>
 <div th:replace="~{fragments :: header}"></div>
-<div class="container">
-    <h1>Ôn tập Flashcard</h1>
-    <a href="/">Trở về trang chủ</a>
 
-    <div id="flashcard-container">
-        <div class="flashcard">
-            <div class="card-inner">
-                <div class="card-front">
-                    <p id="word-display">Đang tải từ...</p>
-                </div>
-                <div class="card-back">
-                    <p id="definition-display"></p>
+<main class="container mx-auto px-6 py-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Ôn tập Flashcard</h1>
+            <p class="text-gray-600 mt-1">Lật thẻ để xem nghĩa và kiểm tra khả năng ghi nhớ của bạn.</p>
+        </div>
+
+        <!-- Vùng chứa Flashcard -->
+        <div id="flashcard-container" class="min-h-[250px] flex items-center justify-center">
+            <div class="flashcard">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <p id="word-display" class="text-3xl font-bold text-gray-800 p-4">Đang tải từ...</p>
+                    </div>
+                    <div class="card-back">
+                        <div id="definition-display" class="p-4 text-center">
+                            <!-- JS sẽ chèn nội dung vào đây -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="controls" class="controls" style="display: none;">
-        <p>Bạn nhớ từ này ở mức độ nào?</p>
-        <button class="rating-btn" data-quality="0">Khó</button>
-        <button class="rating-btn" data-quality="1">Vừa</button>
-        <button class="rating-btn" data-quality="2">Dễ</button>
-    </div>
+        <!-- Vùng chứa thông báo khi không có từ -->
+        <div id="message-container" class="text-center"></div>
 
-    <div id="message-container"></div>
-</div>
+        <!-- Nút điều khiển -->
+        <div id="controls-area" class="mt-6 flex justify-center space-x-4">
+            <button id="flip-btn" class="px-6 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 transition-colors">Lật thẻ</button>
+            <button id="next-btn" class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">Từ tiếp theo</button>
+        </div>
+    </div>
+</main>
+
+<!-- JavaScript xử lý logic flashcard (file review.js đã được cập nhật ở các bước trước) -->
 <script src="/js/review.js" defer></script>
 </body>
 </html>

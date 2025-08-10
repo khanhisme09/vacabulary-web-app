@@ -1,21 +1,24 @@
-// File: src/main/resources/static/js/search.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const searchForm = document.getElementById('search-form');
     const searchInput = document.getElementById('search-input');
     const resultsDiv = document.getElementById('search-results');
 
-    // ... hàm xử lý searchForm submit giữ nguyên ...
     searchForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const searchTerm = searchInput.value.trim();
         if (!searchTerm) return;
-        resultsDiv.innerHTML = '<p>Đang tìm kiếm...</p>';
+
+        resultsDiv.innerHTML = `
+            <div class="mt-8 text-center">
+                <p class="text-gray-500">Đang tìm kiếm...</p>
+            </div>
+        `;
+
         try {
             const response = await fetch(`/api/words/search?q=${encodeURIComponent(searchTerm)}`);
             if (!response.ok) {
                 if (response.status === 404) {
-                    resultsDiv.innerHTML = `<p class="error">Không tìm thấy từ "${searchTerm}"</p>`;
+                    resultsDiv.innerHTML = `<div class="mt-8 p-6 bg-white rounded-lg shadow text-center"><p class="text-red-600">Không tìm thấy từ: <strong>${searchTerm}</strong></p></div>`;
                 } else { throw new Error('Lỗi từ server!'); }
                 return;
             }
@@ -23,26 +26,34 @@ document.addEventListener('DOMContentLoaded', () => {
             displayWord(data);
         } catch (error) {
             console.error('Có lỗi xảy ra:', error);
-            resultsDiv.innerHTML = '<p class="error">Không thể thực hiện tìm kiếm. Vui lòng thử lại.</p>';
+            resultsDiv.innerHTML = `<div class="mt-8 p-6 bg-white rounded-lg shadow text-center"><p class="text-red-600">Không thể thực hiện tìm kiếm. Vui lòng thử lại.</p></div>`;
         }
     });
 
     function displayWord(wordData) {
-        // Lấy thông tin xác thực từ thẻ meta hoặc một element trên trang
         const isAuthenticated = document.querySelector('div[sec\\:authorize="isAuthenticated"]') != null;
-
         let saveButtonHtml = '';
-        // Chỉ hiển thị nút lưu nếu người dùng đã đăng nhập
         if (isAuthenticated) {
-            saveButtonHtml = `<button class="save-word-btn" data-word-id="${wordData.id}">Lưu từ này</button>`;
+            saveButtonHtml = `<button class="save-word-btn absolute top-6 right-6 px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-word-id="${wordData.id}">Lưu từ</button>`;
         }
 
         resultsDiv.innerHTML = `
-            <div class="word">${wordData.word} ${saveButtonHtml}</div>
-            <div class="phonetic">${wordData.phonetic || ''}</div>
-            <div class="definition"><strong>Định nghĩa:</strong> ${wordData.definition}</div>
-            <div class="example"><strong>Ví dụ:</strong> <em>"${wordData.example}"</em></div>
-            <div id="save-status"></div>
+            <div class="mt-8 p-6 bg-white rounded-lg shadow-lg relative animate-fade-in">
+                ${saveButtonHtml}
+                <div class="flex items-baseline space-x-4">
+                    <h2 class="text-3xl font-bold text-gray-900">${wordData.word}</h2>
+                    <span class="text-xl text-gray-500">${wordData.phonetic || ''}</span>
+                </div>
+                <div class="mt-4 border-t pt-4">
+                    <h3 class="font-semibold text-gray-800">Định nghĩa:</h3>
+                    <p class="text-gray-700 leading-relaxed">${wordData.definition}</p>
+                </div>
+                <div class="mt-4 p-4 bg-gray-50 rounded-md border-l-4 border-indigo-500">
+                    <h3 class="font-semibold text-gray-800">Ví dụ:</h3>
+                    <em class="text-gray-700">"${wordData.example || 'Không có ví dụ.'}"</em>
+                </div>
+                <div id="save-status" class="mt-4 text-sm font-medium"></div>
+            </div>
         `;
     }
 
@@ -66,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.textContent = 'Đã lưu';
                     button.disabled = true;
                 } else {
-                    throw new Error('Không thể lưu từ.');
+                     new Error('Không thể lưu từ.');
                 }
             } catch (error) {
                 console.error('Lỗi khi lưu từ:', error);

@@ -1,29 +1,73 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
+
+<!-- ============================================= -->
+<!-- FRAGMENT CHO PHẦN HEAD CỦA TẤT CẢ CÁC TRANG    -->
+<!-- ============================================= -->
+<head th:fragment="head(pageTitle)">
   <meta charset="UTF-8">
-  <title>Tra từ vựng</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${pageTitle} + ' - VocabApp'"></title>
+
+  <!-- Tailwind CSS qua CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS tùy chỉnh (nếu có các style phức tạp) -->
+  <link rel="stylesheet" href="/css/custom.css">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f3f4f6; /* bg-gray-100 */
+    }
+  </style>
 </head>
-<body>
-<!-- Định nghĩa một fragment tên là "header" -->
-<header th:fragment="header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px;">
-  <a href="/" style="text-decoration: none; color: inherit;">
-    <h1>Từ điển Anh-Việt</h1>
-  </a>
-  <nav>
-    <div sec:authorize="!isAuthenticated()">
-      <a href="/login" class="button">Đăng nhập</a>
-      <a href="/register" class="button">Đăng ký</a>
-    </div>
-    <div sec:authorize="isAuthenticated()" style="display: flex; align-items: center; gap: 15px;">
-      <span>Chào, <strong sec:authentication="name">Username</strong>!</span>
-      <a href="/dashboard" class="button">Tiến độ</a>
-      <a href="/my-words" class="button">Từ của tôi</a>
-      <a href="/review" class="button">Ôn tập</a>
-      <form th:action="@{/logout}" method="post" style="display: inline; margin: 0;">
-        <button type="submit" class="button-logout">Đăng xuất</button>
-      </form>
+
+<body class="text-gray-800">
+
+<!-- ============================================= -->
+<!--          HEADER FRAGMENT - PHIÊN BẢN NÂNG CẤP         -->
+<!-- ============================================= -->
+<header th:fragment="header" class="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+  <!-- Tăng padding-y (py-4) và thêm border-b để tạo chiều sâu -->
+  <nav class="container mx-auto px-6 py-4 flex justify-between items-center border-b border-gray-200">
+    <!-- Tăng kích thước logo -->
+    <a href="/" class="text-2xl font-bold text-indigo-600 hover:text-indigo-700 transition-colors">
+      VocabApp
+    </a>
+    <div class="flex items-center space-x-6">
+      <!-- Hiển thị cho người chưa đăng nhập -->
+      <div sec:authorize="!isAuthenticated()" class="space-x-2 flex items-center">
+        <a href="/login" class="px-4 py-2 text-base font-medium text-gray-700 hover:text-indigo-600">Đăng nhập</a>
+        <a href="/register" class="px-4 py-2 text-base font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">Đăng ký</a>
+      </div>
+      <!-- Hiển thị cho người đã đăng nhập -->
+      <div sec:authorize="isAuthenticated()" class="flex items-center space-x-6">
+        <!-- Các link chính - to và rõ ràng hơn -->
+        <a href="/dashboard" class="text-base font-medium text-gray-700 hover:text-indigo-600">Tiến độ</a>
+        <a href="/quiz-menu" class="text-base font-medium text-gray-700 hover:text-indigo-600">Luyện tập</a>
+
+        <!-- Dropdown Menu cho User - đã tối ưu ở bước trước -->
+        <div class="relative group" style="padding-bottom: 0.5rem;">
+                        <span class="cursor-pointer text-base font-medium flex items-center">
+                            <span sec:authentication="name" class="mr-1">User</span>
+                            <svg class="w-5 h-5 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+          <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20
+                                    opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300
+                                    transform group-hover:translate-y-0 translate-y-2">
+            <a href="/my-words" class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Từ của tôi</a>
+            <form th:action="@{/logout}" method="post">
+              <button type="submit" class="w-full text-left block px-4 py-2 text-base text-gray-700 hover:bg-gray-100">Đăng xuất</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 </header>

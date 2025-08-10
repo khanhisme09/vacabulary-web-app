@@ -44,4 +44,14 @@ public class UserController {
     public String dashboardPage() {
         return "dashboard";
     }
+
+    @GetMapping("/quiz-menu")
+    public String quizMenu() {
+        return "quiz-menu";
+    }
+
+    @GetMapping("/quiz")
+    public String quizPage() {
+        return "quiz-page";
+    }
 }

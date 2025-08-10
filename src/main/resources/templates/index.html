@@ -1,45 +1,83 @@
 <!DOCTYPE html>
-<!-- Thêm namespace sec -->
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <title>Tra từ vựng</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head('Tra từ vựng')}"></head>
+
 <body>
 <div th:replace="~{fragments :: header}"></div>
-<div class="container">
-    <header style="display: flex; justify-content: space-between; align-items: center;">
-        <h1>Tra từ vựng tiếng Anh</h1>
-        <nav>
 
-            <!-- Hiển thị nếu người dùng CHƯA đăng nhập -->
-            <div sec:authorize="!isAuthenticated()">
-                <a href="/login" class="button">Đăng nhập</a>
-                <a href="/register" class="button">Đăng ký</a>
+<!-- Nội dung chính - PHIÊN BẢN MỚI -->
+<main>
+    <!-- === Phần Hero Section === -->
+    <section class="bg-white">
+        <div class="container mx-auto px-6 text-center py-20 md:py-28">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
+                Nâng tầm vốn từ vựng của bạn
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                Không chỉ là một từ điển. VocabApp là một hệ thống học tập thông minh giúp bạn ghi nhớ từ vựng hiệu quả và lâu dài.
+            </p>
+
+            <!-- Form tìm kiếm được đặt ở vị trí trung tâm -->
+            <form id="search-form" class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
+                    </div>
+                    <input type="text" id="search-input" placeholder="Bắt đầu tra từ ngay..." required autofocus
+                           class="block w-full text-lg pl-12 pr-4 py-4 border-2 border-gray-300 rounded-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Khu vực hiển thị kết quả tìm kiếm -->
+    <section id="search-results-section" class="container mx-auto px-6 -mt-16">
+        <div id="search-results" class="max-w-3xl mx-auto">
+            <!-- JavaScript sẽ chèn kết quả vào đây -->
+        </div>
+    </section>
+
+    <!-- === Phần Giới thiệu Tính năng === -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900">Tại sao nên chọn VocabApp?</h2>
+                <p class="mt-2 text-lg text-gray-600">Các công cụ được thiết kế dựa trên khoa học về ghi nhớ.</p>
             </div>
 
-            <!-- Hiển thị nếu người dùng ĐÃ đăng nhập -->
-            <div sec:authorize="isAuthenticated()">
-                <span>Chào, <strong sec:authentication="name">Username</strong>!</span>
-                <!-- Form đăng xuất của Spring Security -->
-                <form th:action="@{/logout}" method="post" style="display: inline;">
-                    <button type="submit" class="button-logout">Đăng xuất</button>
-                </form>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                <!-- Tính năng 1 -->
+                <div class="feature-card">
+                    <div class="bg-indigo-100 text-indigo-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-9-5.747h18"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Ôn tập thông minh (SRS)</h3>
+                    <p class="text-gray-600">Hệ thống lặp lại ngắt quãng giúp bạn ôn tập đúng từ, đúng thời điểm, để ghi nhớ từ vựng mãi mãi.</p>
+                </div>
+                <!-- Tính năng 2 -->
+                <div class="feature-card">
+                    <div class="bg-indigo-100 text-indigo-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Luyện tập đa dạng</h3>
+                    <p class="text-gray-600">Củng cố kiến thức qua các bài tập trắc nghiệm, điền từ... giúp việc học trở nên thú vị và hiệu quả hơn.</p>
+                </div>
+                <!-- Tính năng 3 -->
+                <div class="feature-card">
+                    <div class="bg-indigo-100 text-indigo-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Thống kê tiến độ</h3>
+                    <p class="text-gray-600">Theo dõi sự tiến bộ của bạn qua các biểu đồ trực quan, tạo động lực để bạn tiếp tục chinh phục những mục tiêu mới.</p>
+                </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </section>
 
-    <form id="search-form">
-        <label for="search-input">
-            Nhập từ cần tra cứu:
-        </label><input type="text" id="search-input" placeholder="Nhập từ cần tra..." required>
-        <button type="submit">Tra cứu</button>
-    </form>
+</main>
 
-    <div id="search-results"></div>
-</div>
-
+<!-- JavaScript xử lý tìm kiếm -->
 <script src="/js/search.js" defer></script>
 </body>
 </html>

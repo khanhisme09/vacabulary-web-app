@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Lỗi</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-<div class="container" style="text-align: center;">
-    <h1>Oops! Đã có lỗi xảy ra.</h1>
-    <p>Chúng tôi rất tiếc, có vẻ như đã có sự cố.</p>
-    <a href="/" class="button">Quay về trang chủ</a>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments :: head('Đã có lỗi xảy ra')}"></head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="text-center p-8">
+    <h1 class="text-6xl font-extrabold text-indigo-600" th:text="${status} ?: 'Lỗi'">404</h1>
+    <h2 class="mt-4 text-3xl font-bold text-gray-900" th:text="${error} ?: 'Không tìm thấy trang'">Oops! Trang bạn tìm kiếm không tồn tại.</h2>
+    <p class="mt-2 text-base text-gray-600">
+        Chúng tôi rất tiếc, nhưng trang bạn yêu cầu không thể được tìm thấy.
+    </p>
+    <div class="mt-6">
+        <a href="/" class="px-6 py-3 text-sm font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors">
+            Quay về trang chủ
+        </a>
+    </div>
 </div>
 </body>
 </html>
